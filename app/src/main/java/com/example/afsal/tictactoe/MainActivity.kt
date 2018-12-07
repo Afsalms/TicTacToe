@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() , View.OnClickListener{
     var grid = Array<Array<Button?>>(3) { arrayOfNulls(3) }
@@ -44,13 +46,23 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         var a = v as Button
         if (isPlayer1Turn){
 
-            a.setText("X")
+            if(a.text== ""){
+
+                a.setText("X")
+                isPlayer1Turn = !isPlayer1Turn
+                round++
+            }
         }else{
-            a.setText("O")
+            if(a.text == ""){
+
+                a.setText("O")
+                isPlayer1Turn = !isPlayer1Turn
+                round++
+            }
         }
-        isPlayer1Turn = !isPlayer1Turn
-        round++
+
         if (round ==9){
+            Toast.makeText(this, "Draw", Toast.LENGTH_SHORT).show()
             resetBoard(false)
 
         }
