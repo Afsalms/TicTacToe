@@ -18,11 +18,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     var player2Point = 0
     var player1TextView: TextView? = null
     var player2TextView: TextView? = null
+    var resetBtn: Button? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         player1TextView = findViewById<TextView>(R.id.player_1_text)
         player2TextView = findViewById<TextView>(R.id.player_2_text)
+        resetBtn = findViewById<Button>(R.id.reset_button)
+        resetBtn?.setOnClickListener(this)
         resetBoard(true)
 //        resetBoard(false)
 
@@ -50,7 +53,14 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
 
     override fun onClick(v: View?) {
         var a = v as Button
-        if(a.text == ""){
+        if (a.id == R.id.reset_button){
+            resetBoard(false)
+            player2Point = 0
+            player1Point = 0
+            updateTextView()
+
+        }
+        else if(a.text == ""){
             if (isPlayer1Turn){
                 a.setText("X")
                 }
@@ -70,6 +80,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
                     Toast.makeText(this, "Player 2 win", Toast.LENGTH_SHORT).show()
                     resetBoard(false)
                 }
+                updateTextView()
             }
 
             else{
@@ -115,4 +126,13 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
 
 
     }
+
+    fun updateTextView(){
+        var player1Score = "Player 1: " + player1Point
+        var player2Score = "Player 2: " + player2Point
+        player1TextView?.text = player1Score
+        player2TextView?.text = player2Score
+    }
+
+
 }
