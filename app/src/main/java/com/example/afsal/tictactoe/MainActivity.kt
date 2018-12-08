@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import org.w3c.dom.Text
 import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() , View.OnClickListener{
@@ -14,9 +16,13 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     var round = 0
     var player1Point = 0
     var player2Point = 0
+    var player1TextView: TextView? = null
+    var player2TextView: TextView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        player1TextView = findViewById<TextView>(R.id.player_1_text)
+        player2TextView = findViewById<TextView>(R.id.player_2_text)
         resetBoard(true)
 //        resetBoard(false)
 
@@ -44,28 +50,68 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
 
     override fun onClick(v: View?) {
         var a = v as Button
-        if (isPlayer1Turn){
-
-            if(a.text== ""){
-
+        if(a.text == ""){
+            if (isPlayer1Turn){
                 a.setText("X")
-                isPlayer1Turn = !isPlayer1Turn
-                round++
-            }
-        }else{
-            if(a.text == ""){
-
+                }
+            else{
                 a.setText("O")
-                isPlayer1Turn = !isPlayer1Turn
+            }
+            var win = checkForWin()
+            if (win){
+                if (isPlayer1Turn){
+                    player1Point++
+                    Toast.makeText(this, "Player 1 win", Toast.LENGTH_SHORT).show()
+                    resetBoard(false)
+                }
+                else
+                {
+                    player2Point++
+                    Toast.makeText(this, "Player 2 win", Toast.LENGTH_SHORT).show()
+                    resetBoard(false)
+                }
+            }
+
+            else{
                 round++
+                isPlayer1Turn = !isPlayer1Turn
+
+            }
+
+            if (round ==9){
+                Toast.makeText(this, "Draw", Toast.LENGTH_SHORT).show()
+                resetBoard(false)
+
+            }
+
+        }
+
+
+
+    }
+
+    fun checkForWin(): Boolean{
+        // check for all rows
+        for (i in 0..2){
+            if(grid[i][0]?.text == grid[i][1]?.text && grid[i][0]?.text == grid[i][2]?.text && grid[i][0]?.text != ""){
+                return true
             }
         }
-
-        if (round ==9){
-            Toast.makeText(this, "Draw", Toast.LENGTH_SHORT).show()
-            resetBoard(false)
-
+        //check for all columns
+        for (i in 0..2){
+            if(grid[0][i]?.text == grid[1][i]?.text && grid[0][i]?.text == grid[2][i]?.text && grid[0][i]?.text != ""){
+                return true
+            }
         }
+        // check the diagonals
+        if (grid[0][0]?.text == grid[1][1]?.text && grid[0][0]?.text == grid[2][2]?.text && grid[0][0]?.text != ""){
+            return true
+        }
+        if (grid[2][0]?.text == grid[1][1]?.text && grid[0][0]?.text == grid[0][2]?.text && grid[0][2]?.text != ""){
+            return true
+        }
+
+        return false
 
 
     }
