@@ -3,13 +3,10 @@ package com.example.afsal.tictactoe
 import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import org.w3c.dom.Text
-import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() , View.OnClickListener{
     var grid = Array<Array<Button?>>(3) { arrayOfNulls(3) }
@@ -29,7 +26,6 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         resetBtn = findViewById<Button>(R.id.reset_button)
         resetBtn?.setOnClickListener(this)
         resetBoard(true)
-//        resetBoard(false)
 
     }
     fun resetBoard(isInitial: Boolean){
