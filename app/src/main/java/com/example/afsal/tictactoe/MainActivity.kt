@@ -1,5 +1,6 @@
 package com.example.afsal.tictactoe
 
+import android.content.pm.ActivityInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
     var resetBtn: Button? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation= (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         setContentView(R.layout.activity_main)
         player1TextView = findViewById<TextView>(R.id.player_1_text)
         player2TextView = findViewById<TextView>(R.id.player_2_text)
