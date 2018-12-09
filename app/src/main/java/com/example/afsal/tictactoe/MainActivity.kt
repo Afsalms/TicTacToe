@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener{
         if (grid[0][0]?.text == grid[1][1]?.text && grid[0][0]?.text == grid[2][2]?.text && grid[0][0]?.text != ""){
             return true
         }
-        if (grid[2][0]?.text == grid[1][1]?.text && grid[0][0]?.text == grid[0][2]?.text && grid[0][2]?.text != ""){
+        if (grid[2][0]?.text == grid[1][1]?.text && grid[2][0]?.text == grid[0][2]?.text && grid[0][2]?.text != ""){
             return true
         }
 
